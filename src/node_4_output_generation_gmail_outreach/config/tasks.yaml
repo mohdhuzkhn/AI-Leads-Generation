@@ -1,0 +1,251 @@
+---
+discover_target_companies_and_websites:
+  description: "**COMPANY DISCOVERY STRATEGY:**\nFind {limit} companies in {industry}
+    industry located in {location} with {company_size} company size, focusing ONLY
+    on company identification and website discovery.\n\n**STEP 1: ADVANCED COMPANY
+    DISCOVERY**\n1. **Use SerperDevTool** with targeted searches:\n   - `\"{industry}
+    companies {location} {company_size}\"` \n   - `\"best {industry} companies in
+    {location}\"`\n   - `\"top {industry} startups {location}\"`\n   - `\"{industry}
+    directory {location}\"`\n   - **LIMIT RESULTS TO {limit} COMPANIES MAXIMUM**\n\n**STEP
+    2: COMPANY WEBSITE IDENTIFICATION**\n2. **Find Company Websites using SerperDevTool**:\n
+    \  - Search: `\"[CompanyName] official website\"`\n   - Search: `\"[CompanyName]
+    company site\"`\n   - Extract official website URLs from search results\n\n3.
+    **Verify Website Access using FirecrawlScrapeWebsiteTool**:\n   - Test each website
+    URL to ensure it's accessible\n   - Extract basic company information from website\n
+    \  - Verify the website belongs to the correct company\n\n**STEP 3: COMPANY INFORMATION
+    EXTRACTION**\n4. **Extract Company Details using FirecrawlScrapeWebsiteTool**:\n
+    \  - Access company \"About Us\" pages\n   - Extract company description and services\n
+    \  - Identify company size indicators\n   - Verify location and industry match\n\n**CRITICAL
+    OUTPUT REQUIREMENTS:**\n- **MUST OUTPUT VALID JSON ONLY** - No human-readable
+    text or \"Final Answer\"\n- **NO EXPLANATIONS** - Only the JSON structure\n- **STRICT
+    JSON FORMAT** - Follow the exact structure specified in expected output\n\n**CRITICAL
+    SUCCESS FACTORS:**\n- **FIND REAL COMPANIES ONLY** - No fake or placeholder companies\n-
+    **VERIFY WEBSITE ACCESS** - Ensure all websites are working and legitimate\n-
+    **EXTRACT BASIC INFO** - Get company descriptions and verify details\n- **ENSURE
+    {limit} COMPANIES** - Find exactly the requested number of companies\n- **JSON
+    OUTPUT ONLY** - Critical for Node 2 processing"
+  expected_output: "**MUST OUTPUT ONLY THIS EXACT JSON STRUCTURE - NO OTHER TEXT:**\n\n```json\n{\n
+    \ \"search_metadata\": {\n    \"total_companies\": {limit},\n    \"search_criteria\":
+    {\n      \"location\": \"{location}\",\n      \"industry\": \"{industry}\", \n
+    \     \"company_size\": \"{company_size}\"\n    },\n    \"generation_date\": \"YYYY-MM-DD\"\n
+    \ },\n  \"companies\": [\n    {\n      \"company_name\": \"Exact Company Name\",\n
+    \     \"website_url\": \"https://company-website.com\",\n      \"company_description\":
+    \"Brief description extracted from website\",\n      \"industry\": \"Verified
+    industry\",\n      \"location\": \"Verified location\",\n      \"company_size\":
+    \"Employee count or size range\",\n      \"website_accessible\": true,\n      \"data_sources\":
+    [\"SerperDevTool\", \"FirecrawlScrapeWebsiteTool\"]\n    }\n  ]\n}\n```\n\n**CRITICAL
+    REQUIREMENTS:**\n- **JSON ONLY** - No explanations, summaries, or additional text\n-
+    **EXACT FORMAT** - Follow structure precisely for Node 2 consumption\n- **WORKING
+    WEBSITES** - Only include companies with accessible websites\n- **VERIFIED DATA**
+    - Ensure all information matches search criteria\n- **READY FOR PIPELINE** - Output
+    must be processable by automation tools"
+  agent: company_discovery_specialist
+discover_executive_contacts:
+  description: |-
+    **INPUT PROCESSING:**
+    Receive Node 1 JSON output containing company data and extract contact information for key executives.
+
+    **CONTACT DISCOVERY STRATEGY:**
+    For each company from Node 1, find CEO, co-founder, or other key executive contacts using multiple search approaches.
+
+    **STEP 1: EXECUTIVE IDENTIFICATION**
+    1. **Use SerperDevTool** to find executives:
+       - Search: `"[CompanyName] CEO" OR "[CompanyName] founder" OR "[CompanyName] co-founder"`
+       - Search: `"[CompanyName] leadership team" OR "[CompanyName] management"`
+       - Extract names and titles from search results
+
+    **STEP 2: LINKEDIN PROFILE DISCOVERY**
+    2. **Generate LinkedIn searches using LinkedIn Boolean Generator Tool**:
+       - Input: Company name, executive names, titles
+       - Use generated Boolean strings with SerperDevTool
+       - Find LinkedIn profile URLs for each executive
+
+    **STEP 3: EMAIL ADDRESS DISCOVERY**
+    3. **Find email addresses using Advanced Web Boolean Builder**:
+       - Generate email search queries for each executive
+       - Search company websites, directories, and public sources
+       - Extract and validate email patterns
+
+    **STEP 4: PHONE NUMBER ENRICHMENT**
+    4. **Use Phone Number Enrichment Tool**:
+       - Input executive names and company information
+       - Find direct phone numbers and mobile contacts
+       - Validate phone number quality and business relevance
+
+    **CRITICAL SUCCESS FACTORS:**
+    - **FIND REAL CONTACTS** - Only verified executives with proper titles
+    - **MULTIPLE CONTACT METHODS** - LinkedIn + email + phone when possible
+    - **VALIDATE INFORMATION** - Cross-reference data across sources
+    - **MAINTAIN JSON STRUCTURE** - Prepare for Node 3 processing
+  expected_output: "**OUTPUT ONLY THIS EXACT JSON STRUCTURE - NO OTHER TEXT:**\n\n```json\n{\n
+    \ \"processing_metadata\": {\n    \"node_source\": \"Node 1\",\n    \"total_companies_processed\":
+    \"number\",\n    \"total_contacts_found\": \"number\",\n    \"processing_date\":
+    \"YYYY-MM-DD\"\n  },\n  \"enriched_companies\": [\n    {\n      \"company_name\":
+    \"Company Name from Node 1\",\n      \"website_url\": \"Website from Node 1\",
+    \n      \"company_description\": \"Description from Node 1\",\n      \"industry\":
+    \"Industry from Node 1\",\n      \"location\": \"Location from Node 1\",\n      \"company_size\":
+    \"Size from Node 1\",\n      \"contacts\": [\n        {\n          \"name\": \"Executive
+    Full Name\",\n          \"title\": \"CEO/Founder/Co-founder\",\n          \"linkedin_url\":
+    \"https://linkedin.com/in/profile\",\n          \"email_address\": \"email@company.com\",\n
+    \         \"phone_number\": \"+1234567890\",\n          \"contact_confidence\":
+    \"high/medium/low\",\n          \"data_sources\": [\"SerperDevTool\", \"LinkedIn\",
+    \"Phone Tool\"],\n          \"verification_status\": \"verified/unverified\"\n
+    \       }\n      ],\n      \"contact_summary\": {\n        \"total_contacts\":
+    \"number\",\n        \"verified_contacts\": \"number\",\n        \"contact_types_found\":
+    [\"CEO\", \"Founder\", \"etc\"]\n      }\n    }\n  ]\n}\n```\n\n**CRITICAL REQUIREMENTS:**\n-
+    **JSON ONLY** - No explanations or additional text\n- **PRESERVE NODE 1 DATA**
+    - Keep all original company information\n- **ADD CONTACT LAYER** - Enrich with
+    executive contact details\n- **VALIDATION SCORES** - Include confidence and verification
+    status\n- **READY FOR NODE 3** - Format for lead scoring and validation"
+  agent: contact_discovery_specialist
+  context:
+  - discover_target_companies_and_websites
+validate_and_score_leads:
+  description: |-
+    **INPUT PROCESSING:**
+    Receive Node 2 JSON output with enriched company and contact data, then validate and score each lead.
+
+    **LEAD VALIDATION STRATEGY:**
+    Analyze each company-contact combination and assign comprehensive scores.
+
+    **STEP 1: CONTACT VALIDATION**
+    1. **Use Multi-Source Phone Validator** to validate phone numbers:
+       - Check phone number accuracy and business relevance
+       - Score phone number confidence levels
+       - Identify priority calling numbers
+
+    2. **Email Address Validation using SerperDevTool**:
+       - Verify email patterns match company domains
+       - Check for executive email format consistency
+       - Validate against company directory listings
+
+    **STEP 2: COMPANY SCORING**
+    3. **Company Quality Assessment**:
+       - Company size fit (evaluate against criteria)
+       - Industry relevance score
+       - Website quality and accessibility
+       - Geographic location alignment
+
+    **STEP 3: CONTACT COMPLETENESS SCORING**
+    4. **Contact Data Quality**:
+       - Contact information completeness (LinkedIn + Email + Phone)
+       - Executive level and decision-making authority
+       - Contact verification confidence
+       - Multiple contact method availability
+
+    **STEP 4: OVERALL LEAD PRIORITIZATION**
+    5. **Lead Scoring Algorithm**:
+       - Combine company fit + contact quality + verification status
+       - Assign priority levels: A (immediate contact), B (high priority), C (medium priority), D (low priority)
+       - Flag any data quality issues or missing information
+
+    **CRITICAL SUCCESS FACTORS:**
+    - **THOROUGH VALIDATION** - Check all contact methods and company data
+    - **ACTIONABLE SCORING** - Clear priority levels for sales team
+    - **QUALITY FLAGS** - Identify issues that need attention
+    - **MAINTAIN DATA INTEGRITY** - Preserve all enriched information
+  expected_output: "**OUTPUT ONLY THIS EXACT JSON STRUCTURE - NO OTHER TEXT:**\n\n```json\n{\n
+    \ \"validation_metadata\": {\n    \"node_source\": \"Node 2\", \n    \"total_leads_processed\":
+    \"number\",\n    \"validation_date\": \"YYYY-MM-DD\",\n    \"scoring_criteria\":
+    [\"company_fit\", \"contact_completeness\", \"verification_confidence\"]\n  },\n
+    \ \"scored_leads\": [\n    {\n      \"company_name\": \"Company Name from Node
+    2\",\n      \"website_url\": \"Website from Node 2\",\n      \"company_description\":
+    \"Description from Node 2\", \n      \"industry\": \"Industry from Node 2\",\n
+    \     \"location\": \"Location from Node 2\",\n      \"company_size\": \"Size
+    from Node 2\",\n      \"contacts\": [\n        {\n          \"name\": \"Executive
+    Name from Node 2\",\n          \"title\": \"Title from Node 2\",\n          \"linkedin_url\":
+    \"LinkedIn URL from Node 2\",\n          \"email_address\": \"Email from Node
+    2\", \n          \"phone_number\": \"Phone from Node 2\",\n          \"contact_confidence\":
+    \"Original confidence from Node 2\",\n          \"data_sources\": \"Sources from
+    Node 2\",\n          \"verification_status\": \"Updated verification status\",\n
+    \         \"validation_scores\": {\n            \"phone_validation_score\": \"0-100\",\n
+    \           \"email_validation_score\": \"0-100\", \n            \"linkedin_validation_score\":
+    \"0-100\",\n            \"overall_contact_score\": \"0-100\"\n          }\n        }\n
+    \     ],\n      \"company_scores\": {\n        \"company_fit_score\": \"0-100\",\n
+    \       \"data_completeness_score\": \"0-100\", \n        \"verification_confidence_score\":
+    \"0-100\",\n        \"overall_company_score\": \"0-100\"\n      },\n      \"lead_priority\":
+    \"A/B/C/D\",\n      \"priority_reasoning\": \"Brief explanation for priority assignment\",\n
+    \     \"outreach_readiness\": \"ready/needs_validation/incomplete_data\",\n      \"quality_flags\":
+    [\"flag1\", \"flag2\"] or [],\n      \"recommended_contact_method\": \"phone/email/linkedin\"\n
+    \   }\n  ],\n  \"summary_stats\": {\n    \"a_priority_leads\": \"number\",\n    \"b_priority_leads\":
+    \"number\", \n    \"c_priority_leads\": \"number\",\n    \"d_priority_leads\":
+    \"number\",\n    \"ready_for_outreach\": \"number\",\n    \"needs_validation\":
+    \"number\"\n  }\n}\n```\n\n**CRITICAL REQUIREMENTS:**\n- **JSON ONLY** - No explanations
+    or additional text\n- **PRESERVE ALL NODE 2 DATA** - Keep all enriched information\n-
+    **ADD VALIDATION LAYER** - Include comprehensive scoring\n- **ACTIONABLE PRIORITIES**
+    - Clear A/B/C/D priority system\n- **READY FOR NODE 4** - Format for Google Sheets
+    and Gmail outreach"
+  agent: lead_quality_analyst
+  context:
+  - discover_executive_contacts
+generate_output_and_manage_outreach:
+  description: |-
+    **INPUT PROCESSING:**
+    Receive Node 3 JSON output with scored and validated lead data, then organize into Google Sheets and initiate Gmail outreach.
+
+    **OUTPUT GENERATION STRATEGY:**
+    Create structured outputs and coordinate outreach campaigns based on lead priorities.
+
+    **STEP 1: GOOGLE SHEETS CREATION**
+    1. **Create Lead Database Spreadsheet**:
+       - Use `google_sheets/create_spreadsheet` to create a new spreadsheet titled "Lead Database - [Date]"
+       - Set up columns: Company Name, Website, Industry, Location, Company Size, Contact Name, Title, LinkedIn URL, Email, Phone, Priority (A/B/C/D), Overall Score, Contact Method, Outreach Status
+
+    2. **Populate Spreadsheet with Lead Data**:
+       - Use `google_sheets/append_values` to add all scored leads from Node 3 to the spreadsheet
+       - Add each lead as a row with all relevant information from the JSON
+       - Format priority levels appropriately (A/B/C/D)
+
+    **STEP 2: GMAIL OUTREACH COORDINATION**
+    3. **Priority A Leads - Immediate Outreach**:
+       - Use `google_gmail/create_draft` for A-priority leads
+       - Create personalized email drafts using recommended contact method from Node 3
+       - Subject lines tailored to company and executive title
+       - Professional, concise outreach messages
+
+    4. **Priority B Leads - Scheduled Outreach**:
+       - Use `google_gmail/create_draft` for B-priority leads
+       - Create email drafts for follow-up outreach sequence
+       - Include relevant company-specific details
+
+    **STEP 3: OUTREACH TRACKING**
+    5. **Campaign Management**:
+       - Use `google_sheets/update_values` to update spreadsheet with outreach status
+       - Track email delivery and engagement
+       - Maintain outreach log for follow-ups
+
+    **CRITICAL SUCCESS FACTORS:**
+    - **USE ACTUAL TOOLS** - Must call Google Sheets and Gmail tools, not generate mock data
+    - **REAL SPREADSHEET CREATION** - Actually create and populate Google Sheets
+    - **REAL EMAIL DRAFTS** - Actually create Gmail drafts for outreach
+    - **STRUCTURED DATA INPUT** - Process all leads from Node 3 JSON systematically
+  expected_output: "**OUTPUT STRUCTURED REPORT:**\n\n```json\n{\n  \"output_metadata\":
+    {\n    \"node_source\": \"Node 3\",\n    \"processing_date\": \"YYYY-MM-DD\",\n
+    \   \"total_leads_processed\": \"number\",\n    \"output_formats\": [\"Google
+    Sheets\", \"Gmail Campaigns\"]\n  },\n  \"google_sheets_output\": {\n    \"spreadsheet_id\":
+    \"Generated Google Sheets ID\", \n    \"spreadsheet_url\": \"https://docs.google.com/spreadsheets/d/...\",\n
+    \   \"total_rows_added\": \"number\",\n    \"sheet_structure\": {\n      \"columns\":
+    [\"Company Name\", \"Website\", \"Industry\", \"Location\", \"Company Size\",
+    \"Contact Name\", \"Title\", \"LinkedIn URL\", \"Email\", \"Phone\", \"Priority\",
+    \"Overall Score\", \"Contact Method\", \"Outreach Status\"],\n      \"formatting_applied\":
+    \"Conditional formatting by priority level\",\n      \"sorting\": \"By priority
+    level A-D\"\n    }\n  },\n  \"gmail_outreach_summary\": {\n    \"a_priority_outreach\":
+    {\n      \"leads_contacted\": \"number\",\n      \"emails_sent\": \"number\",
+    \n      \"drafts_created\": \"number\",\n      \"contact_methods_used\": [\"email\",
+    \"phone\", \"linkedin\"]\n    },\n    \"b_priority_outreach\": {\n      \"leads_queued\":
+    \"number\",\n      \"drafts_created\": \"number\",\n      \"scheduled_follow_ups\":
+    \"number\"\n    },\n    \"outreach_tracking\": {\n      \"total_outreach_initiated\":
+    \"number\",\n      \"delivery_status\": \"pending/delivered/failed\",\n      \"next_actions\":
+    [\"Follow-up A leads\", \"Begin B priority outreach\", \"etc\"]\n    }\n  },\n
+    \ \"campaign_results\": {\n    \"leads_ready_for_immediate_action\": \"number\",\n
+    \   \"leads_queued_for_follow_up\": \"number\", \n    \"leads_requiring_validation\":
+    \"number\",\n    \"spreadsheet_accessibility\": \"accessible/requires_permissions\",\n
+    \   \"outreach_status\": \"active/completed/pending\"\n  }\n}\n```\n\n**DELIVERABLES:**\n-
+    **Organized Google Sheets** with all lead data, scoring, and priority levels\n-
+    **Gmail Outreach Campaign** initiated for A and B priority leads  \n- **Tracking
+    System** in place for ongoing campaign management\n- **Complete Lead Database**
+    ready for sales team utilization\n- **Outreach Status Report** with next steps
+    and recommendations"
+  agent: output_coordinator
+  context:
+  - validate_and_score_leads

@@ -1,0 +1,28 @@
+[project]
+name = "node_4_output_generation_gmail_outreach"
+version = "0.1.0"
+description = "node_4_output_generation_gmail_outreach using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[file-processing,litellm,tools]==1.13.0",
+    "firecrawl-py",
+]
+
+[project.scripts]
+node_4_output_generation_gmail_outreach = "node_4_output_generation_gmail_outreach.main:run"
+run_crew = "node_4_output_generation_gmail_outreach.main:run"
+train = "node_4_output_generation_gmail_outreach.main:train"
+replay = "node_4_output_generation_gmail_outreach.main:replay"
+test = "node_4_output_generation_gmail_outreach.main:test"
+run_with_trigger = "node_4_output_generation_gmail_outreach.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.uv]
+override-dependencies = ["litellm<=1.82.6"]
